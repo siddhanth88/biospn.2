@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { products, categories } from '../data/products';
+import Reveal from '../components/Reveal';
+import LazyImage from '../components/LazyImage';
 
 interface ProductsProps {
   darkMode: boolean;
@@ -16,12 +18,12 @@ export default function Products({ darkMode }: ProductsProps) {
     <div className="pt-20">
       <section className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <Reveal className="text-center mb-12" direction="up">
             <h1 className="text-5xl font-bold mb-6">Our Products</h1>
             <p className={`text-xl ${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
               Comprehensive range of high-purity water treatment systems designed for critical applications
             </p>
-          </div>
+          </Reveal>
 
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button
@@ -55,17 +57,17 @@ export default function Products({ darkMode }: ProductsProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map((product) => (
-              <div
+              <Reveal
                 key={product.id}
-                className={`rounded-xl overflow-hidden shadow-lg transition-all hover:scale-105 hover:shadow-2xl ${
+                className={`rounded-xl overflow-hidden card-hover ${
                   darkMode ? 'bg-gray-800' : 'bg-white'
                 }`}
               >
                 <div className="relative h-56 overflow-hidden">
-                  <img
+                  <LazyImage
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-200 ease-out hover:scale-105"
                   />
                   <div className="absolute top-4 right-4">
                     <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -74,7 +76,7 @@ export default function Products({ darkMode }: ProductsProps) {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">{product.name}</h3>
+                  <h3 className="text-xl font-bold mb-3 card-text-lift">{product.name}</h3>
                   <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                     {product.description}
                   </p>
@@ -94,11 +96,11 @@ export default function Products({ darkMode }: ProductsProps) {
                       ))}
                     </ul>
                   </div>
-                  <button className="mt-6 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+                  <button className="mt-6 w-full py-3 btn-primary btn-shine">
                     Request Quote
                   </button>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -106,18 +108,18 @@ export default function Products({ darkMode }: ProductsProps) {
 
       <section className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <Reveal className="text-center" direction="up">
             <h2 className="text-4xl font-bold mb-6">Need a Custom Solution?</h2>
             <p className={`text-lg mb-8 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Our engineering team can design and build tailored purification systems to meet your specific requirements
             </p>
             <a
               href="/contact"
-              className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+              className="inline-block px-8 py-4 btn-primary btn-shine"
             >
               Contact Our Engineers
             </a>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

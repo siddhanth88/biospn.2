@@ -1,4 +1,6 @@
 import { Award, Target, Eye, CheckCircle } from 'lucide-react';
+import Reveal from '../components/Reveal';
+import LazyImage from '../components/LazyImage';
 
 interface AboutProps {
   darkMode: boolean;
@@ -18,37 +20,39 @@ export default function About({ darkMode }: AboutProps) {
     <div className="pt-20">
       <section className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <Reveal className="text-center mb-16" direction="up">
             <h1 className="text-5xl font-bold mb-6">About BIOSPN HiPurity Systems</h1>
             <p className={`text-xl ${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
               Your trusted partner in advanced water purification and treatment solutions
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div>
-              <img
+            <Reveal>
+              <LazyImage
                 src="https://images.pexels.com/photos/3825574/pexels-photo-3825574.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt="Laboratory"
                 className="rounded-xl shadow-2xl"
               />
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Company Overview</h2>
-              <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
-                BIOSPN HiPurity Systems is a leading manufacturer and supplier of advanced water purification systems
-                designed for critical applications in pharmaceutical, biotechnology, healthcare, and research industries.
-              </p>
-              <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
-                With decades of combined expertise, our team delivers cutting-edge solutions that meet the most stringent
-                international standards and regulatory requirements. We specialize in designing, manufacturing, and
-                maintaining high-purity water systems that ensure reliability, efficiency, and compliance.
-              </p>
-              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
-                Our commitment to innovation and quality has made us the preferred choice for organizations seeking
-                dependable purification technology backed by comprehensive technical support and service excellence.
-              </p>
-            </div>
+            </Reveal>
+            <Reveal>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Company Overview</h2>
+                <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+                  BIOSPN HiPurity Systems is a leading manufacturer and supplier of advanced water purification systems
+                  designed for critical applications in pharmaceutical, biotechnology, healthcare, and research industries.
+                </p>
+                <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+                  With decades of combined expertise, our team delivers cutting-edge solutions that meet the most stringent
+                  international standards and regulatory requirements. We specialize in designing, manufacturing, and
+                  maintaining high-purity water systems that ensure reliability, efficiency, and compliance.
+                </p>
+                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+                  Our commitment to innovation and quality has made us the preferred choice for organizations seeking
+                  dependable purification technology backed by comprehensive technical support and service excellence.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -56,7 +60,7 @@ export default function About({ darkMode }: AboutProps) {
       <section className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className={`p-8 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
+            <Reveal className={`p-8 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
               <div className="flex items-center mb-4">
                 <div className="bg-blue-600 p-3 rounded-lg mr-4">
                   <Target className="text-white" size={32} />
@@ -67,9 +71,9 @@ export default function About({ darkMode }: AboutProps) {
                 To provide innovative, reliable, and sustainable water purification solutions that enable our clients
                 to achieve operational excellence while maintaining the highest standards of quality and safety.
               </p>
-            </div>
+            </Reveal>
 
-            <div className={`p-8 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
+            <Reveal className={`p-8 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
               <div className="flex items-center mb-4">
                 <div className="bg-blue-600 p-3 rounded-lg mr-4">
                   <Eye className="text-white" size={32} />
@@ -80,7 +84,7 @@ export default function About({ darkMode }: AboutProps) {
                 To be the global leader in high-purity water systems, recognized for technological innovation,
                 customer satisfaction, and our contribution to advancing healthcare and scientific research worldwide.
               </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -99,7 +103,7 @@ export default function About({ darkMode }: AboutProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert, index) => (
-              <div
+              <Reveal
                 key={index}
                 className={`p-6 rounded-xl flex items-start space-x-4 transition-all hover:scale-105 ${
                   darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:shadow-lg'
@@ -107,7 +111,7 @@ export default function About({ darkMode }: AboutProps) {
               >
                 <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={24} />
                 <span className="font-medium">{cert}</span>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -123,13 +127,13 @@ export default function About({ darkMode }: AboutProps) {
               { title: 'Quality', desc: 'Uncompromising standards' },
               { title: 'Support', desc: '24/7 technical assistance' }
             ].map((item, index) => (
-              <div key={index} className="text-center">
+              <Reveal key={index} className="text-center">
                 <div className="text-5xl font-bold text-blue-600 mb-2">
                   {index === 0 ? '25+' : index === 1 ? '100+' : index === 2 ? '99.9%' : '24/7'}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                 <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>{item.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
