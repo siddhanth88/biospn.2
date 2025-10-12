@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { products, categories } from '../data/products';
+import { AnimatedSection } from '../components/AnimatedSection';
+import LazyImage from '../components/LazyImage';
 
 interface ProductsProps {
   darkMode: boolean;
@@ -14,112 +17,204 @@ export default function Products({ darkMode }: ProductsProps) {
 
   return (
     <div className="pt-20">
-      <section className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <AnimatedSection className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <h1 className="text-5xl font-bold mb-6">Our Products</h1>
             <p className={`text-xl ${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
               Comprehensive range of high-purity water treatment systems designed for critical applications
             </p>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <button
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <motion.button
               onClick={() => setSelectedCategory('All')}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
+              className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
                 selectedCategory === 'All'
-                  ? 'bg-blue-600 text-white shadow-lg scale-105'
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg scale-105'
                   : darkMode
-                  ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 hover:shadow-md'
               }`}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
             >
               All Products
-            </button>
-            {categories.map((category) => (
-              <button
+            </motion.button>
+            {categories.map((category, index) => (
+              <motion.button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
                   selectedCategory === category
-                    ? 'bg-blue-600 text-white shadow-lg scale-105'
+                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg scale-105'
                     : darkMode
-                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 hover:shadow-md'
                 }`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {category}
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className={`rounded-xl overflow-hidden shadow-lg transition-all hover:scale-105 hover:shadow-2xl ${
-                  darkMode ? 'bg-gray-800' : 'bg-white'
-                }`}
-              >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform hover:scale-110"
-                  />
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {product.category}
-                    </span>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedCategory}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              {filteredProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  className={`group rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl ${
+                    darkMode ? 'bg-gray-800' : 'bg-white'
+                  }`}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ 
+                    y: -8, 
+                    scale: 1.02,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <div className="relative h-56 overflow-hidden">
+                    <LazyImage
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <motion.div
+                      className="absolute top-4 right-4"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
+                    >
+                      <span className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                        {product.category}
+                      </span>
+                    </motion.div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">{product.name}</h3>
-                  <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    {product.description}
-                  </p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-sm uppercase tracking-wide">Key Features:</h4>
-                    <ul className="space-y-1">
-                      {product.features.map((feature, index) => (
-                        <li
-                          key={index}
-                          className={`text-sm flex items-start ${
-                            darkMode ? 'text-gray-300' : 'text-gray-600'
-                          }`}
-                        >
-                          <span className="text-blue-600 mr-2">•</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="p-6">
+                    <motion.h3
+                      className="text-xl font-bold mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                    >
+                      {product.name}
+                    </motion.h3>
+                    <motion.p
+                      className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                    >
+                      {product.description}
+                    </motion.p>
+                    <motion.div
+                      className="space-y-2"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                    >
+                      <h4 className="font-semibold text-sm uppercase tracking-wide text-blue-600 dark:text-blue-400">
+                        Key Features:
+                      </h4>
+                      <ul className="space-y-1">
+                        {product.features.map((feature, featureIndex) => (
+                          <motion.li
+                            key={featureIndex}
+                            className={`text-sm flex items-start ${
+                              darkMode ? 'text-gray-300' : 'text-gray-600'
+                            }`}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.6 + index * 0.1 + featureIndex * 0.05 }}
+                          >
+                            <span className="text-blue-600 mr-2 font-bold">•</span>
+                            {feature}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                    <motion.button
+                      className="group/btn relative mt-6 w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700 ease-in-out" />
+                      <span className="relative">Request Quote</span>
+                    </motion.button>
                   </div>
-                  <button className="mt-6 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
-                    Request Quote
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      <AnimatedSection className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-4xl font-bold mb-6">Need a Custom Solution?</h2>
-            <p className={`text-lg mb-8 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Our engineering team can design and build tailored purification systems to meet your specific requirements
-            </p>
-            <a
-              href="/contact"
-              className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+            <motion.h2
+              className="text-4xl font-bold mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
             >
-              Contact Our Engineers
-            </a>
+              Need a Custom Solution?
+            </motion.h2>
+            <motion.p
+              className={`text-lg mb-8 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Our engineering team can design and build tailored purification systems to meet your specific requirements
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <a
+                href="/contact"
+                className="group relative inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
+                <span className="relative">Contact Our Engineers</span>
+              </a>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   );
 }
