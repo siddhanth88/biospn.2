@@ -1,4 +1,6 @@
 import { Beaker, Building2, Heart, Microscope, FlaskConical } from 'lucide-react';
+import Reveal from '../components/Reveal';
+import LazyImage from '../components/LazyImage';
 
 interface IndustriesProps {
   darkMode: boolean;
@@ -77,16 +79,16 @@ export default function Industries({ darkMode }: IndustriesProps) {
     <div className="pt-20">
       <section className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <Reveal className="text-center mb-16" direction="up">
             <h1 className="text-5xl font-bold mb-6">Industries We Serve</h1>
             <p className={`text-xl ${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
               Delivering specialized purification solutions tailored to the unique requirements of diverse sectors
             </p>
-          </div>
+          </Reveal>
 
           <div className="space-y-16">
             {industries.map((industry, index) => (
-              <div
+              <Reveal
                 key={index}
                 className={`rounded-2xl overflow-hidden shadow-xl ${
                   darkMode ? 'bg-gray-800' : 'bg-white'
@@ -96,7 +98,7 @@ export default function Industries({ darkMode }: IndustriesProps) {
                   index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                 }`}>
                   <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                    <img
+                    <LazyImage
                       src={industry.image}
                       alt={industry.title}
                       className="w-full h-full object-cover min-h-[300px]"
@@ -130,7 +132,7 @@ export default function Industries({ darkMode }: IndustriesProps) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -150,7 +152,7 @@ export default function Industries({ darkMode }: IndustriesProps) {
                 { title: 'Validation', desc: 'Complete IQ/OQ/PQ documentation and support' },
                 { title: 'Service', desc: 'Preventive maintenance and 24/7 technical support' }
               ].map((item, index) => (
-                <div
+                <Reveal
                   key={index}
                   className={`p-6 rounded-xl ${
                     darkMode ? 'bg-gray-700' : 'bg-gray-50'
@@ -158,12 +160,12 @@ export default function Industries({ darkMode }: IndustriesProps) {
                 >
                   <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                   <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>{item.desc}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
             <a
               href="/contact"
-              className="inline-block mt-10 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+              className="inline-block mt-10 px-8 py-4 btn-primary btn-shine"
             >
               Discuss Your Requirements
             </a>

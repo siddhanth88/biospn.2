@@ -27,7 +27,7 @@ function App() {
   return (
     <Router>
       <div className={darkMode ? 'dark' : ''}>
-        <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+        <div className={`min-h-screen theme-transition ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
           <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <Routes>
             <Route path="/" element={<Home darkMode={darkMode} />} />

@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Buttons: subtle premium gradient with shine on hover */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 text-white shadow-sm;
+    background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+  }
+  .btn-primary:hover {
+    @apply shadow-md scale-[1.015];
+  }
+  .btn-primary:focus-visible {
+    @apply ring-2 ring-blue-500/30 outline-none;
+  }
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -50%;
+    width: 50%;
+    height: 300%;
+    transform: rotate(25deg);
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+    transition: transform 0.3s ease;
+  }
+  .btn-shine:hover::after {
+    transform: translateX(250%) rotate(25deg);
+  }
+
+  /* Card hover luxury lift */
+  .card-hover {
+    @apply transition-transform duration-200 ease-out shadow-sm;
+  }
+  .card-hover:hover {
+    @apply shadow-lg scale-[1.02];
+  }
+  .card-text-lift {
+    @apply transition-transform duration-200 ease-out;
+  }
+  .card-hover:hover .card-text-lift {
+    @apply -translate-y-0.5;
+  }
+}
+
+/* Smooth theme transitions */
+.theme-transition {
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}

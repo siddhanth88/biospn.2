@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award, Users, Globe, Shield } from 'lucide-react';
+import Reveal from '../components/Reveal';
+import LazyImage from '../components/LazyImage';
 
 interface HomeProps {
   darkMode: boolean;
@@ -15,19 +17,21 @@ export default function Home({ darkMode }: HomeProps) {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Advanced HiPurity Systems
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-            Leading the way in water purification technology for pharmaceutical, biotech, and research industries
-          </p>
-          <Link
-            to="/products"
-            className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors space-x-2 text-lg"
-          >
-            <span>Explore Our Products</span>
-            <ArrowRight size={24} />
-          </Link>
+          <Reveal direction="up">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              Advanced HiPurity Systems
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
+              Leading the way in water purification technology for pharmaceutical, biotech, and research industries
+            </p>
+            <Link
+              to="/products"
+              className="inline-flex items-center px-8 py-4 btn-primary btn-shine space-x-2 text-lg"
+            >
+              <span>Explore Our Products</span>
+              <ArrowRight size={24} />
+            </Link>
+          </Reveal>
         </div>
       </section>
 
@@ -40,11 +44,11 @@ export default function Home({ darkMode }: HomeProps) {
               { icon: Globe, title: 'Global Reach', description: 'Serving clients across multiple continents' },
               { icon: Shield, title: 'Reliable Solutions', description: 'Proven technology backed by comprehensive support' }
             ].map((item, index) => (
-              <div
+              <Reveal
                 key={index}
-                className={`text-center p-6 rounded-xl transition-all hover:scale-105 ${
-                  darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'
-                }`}
+                className={`text-center p-6 rounded-xl ${
+                  darkMode ? 'bg-gray-700' : 'bg-gray-50'
+                } card-hover`}
               >
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">
                   <item.icon className="text-white" size={32} />
@@ -53,7 +57,7 @@ export default function Home({ darkMode }: HomeProps) {
                 <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>
                   {item.description}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -73,25 +77,25 @@ export default function Home({ darkMode }: HomeProps) {
               { title: 'Biotechnology', image: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=800' },
               { title: 'Healthcare', image: 'https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=800' }
             ].map((industry, index) => (
-              <div
+              <Reveal
                 key={index}
                 className="relative h-64 rounded-xl overflow-hidden group cursor-pointer"
               >
-                <img
+                <LazyImage
                   src={industry.image}
                   alt={industry.title}
-                  className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
                   <h3 className="text-white text-2xl font-bold p-6">{industry.title}</h3>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
           <div className="text-center mt-12">
             <Link
               to="/industries"
-              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors space-x-2"
+              className="inline-flex items-center px-6 py-3 btn-primary btn-shine space-x-2"
             >
               <span>View All Industries</span>
               <ArrowRight size={20} />
@@ -101,19 +105,21 @@ export default function Home({ darkMode }: HomeProps) {
       </section>
 
       <section className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-          <p className={`text-lg mb-8 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Contact us today to discuss your purification system requirements
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors space-x-2"
-          >
-            <span>Contact Us</span>
-            <ArrowRight size={20} />
-          </Link>
-        </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <Reveal direction="up">
+              <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
+              <p className={`text-lg mb-8 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                Contact us today to discuss your purification system requirements
+              </p>
+              <Link
+                to="/contact"
+                className="inline-flex items-center px-8 py-4 btn-primary btn-shine space-x-2"
+              >
+                <span>Contact Us</span>
+                <ArrowRight size={20} />
+              </Link>
+            </Reveal>
+          </div>
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 
@@ -10,6 +10,29 @@ interface NavbarProps {
 export default function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [showNav, setShowNav] = useState(true);
+  const [lastY, setLastY] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY || 0;
+      setScrolled(currentY > 8);
+      // Show when scrolling up, hide when scrolling down
+      if (currentY < 8) {
+        setShowNav(true);
+      } else if (currentY > lastY + 4) {
+        setShowNav(false);
+      } else if (currentY < lastY - 4) {
+        setShowNav(true);
+      }
+      setLastY(currentY);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [lastY]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -22,9 +45,17 @@ export default function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className={`fixed w-full z-50 transition-colors ${
-      darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
-    } shadow-md`}>
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        darkMode ? 'text-white' : 'text-gray-900'
+      } ${
+        scrolled
+          ? (darkMode ? 'bg-gray-900/70 backdrop-blur-md shadow-sm' : 'bg-white/70 backdrop-blur-md shadow-sm')
+          : darkMode
+          ? 'bg-gray-900/70 backdrop-blur-md'
+          : 'bg-white/70 backdrop-blur-md'
+      } ${showNav || isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-3">
