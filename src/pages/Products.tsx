@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { products, categories } from '../data/products';
 import { AnimatedSection } from '../components/AnimatedSection';
 import LazyImage from '../components/LazyImage';
+import FloatingCard from '../components/FloatingCard';
+import MagneticButton from '../components/MagneticButton';
+import MorphingShapes from '../components/MorphingShapes';
 
 interface ProductsProps {
   darkMode: boolean;
@@ -17,8 +20,9 @@ export default function Products({ darkMode }: ProductsProps) {
 
   return (
     <div className="pt-20">
-      <AnimatedSection className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <AnimatedSection className={`relative py-20 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'} overflow-hidden`}>
+        <MorphingShapes darkMode={darkMode} />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
@@ -83,19 +87,11 @@ export default function Products({ darkMode }: ProductsProps) {
               transition={{ duration: 0.4 }}
             >
               {filteredProducts.map((product, index) => (
-                <motion.div
+                <FloatingCard
                   key={product.id}
-                  className={`group rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl ${
-                    darkMode ? 'bg-gray-800' : 'bg-white'
-                  }`}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ 
-                    y: -8, 
-                    scale: 1.02,
-                    transition: { duration: 0.3 }
-                  }}
+                  glowColor={index % 4 === 0 ? 'blue' : index % 4 === 1 ? 'purple' : index % 4 === 2 ? 'green' : 'orange'}
+                  floatIntensity={0.6}
+                  className="h-full"
                 >
                   <div className="relative h-56 overflow-hidden">
                     <LazyImage
@@ -158,19 +154,18 @@ export default function Products({ darkMode }: ProductsProps) {
                         ))}
                       </ul>
                     </motion.div>
-                    <motion.button
-                      className="group/btn relative mt-6 w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden"
+                    <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      className="mt-6"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-                      <span className="relative">Request Quote</span>
-                    </motion.button>
+                      <MagneticButton variant="primary" size="md" className="w-full">
+                        Request Quote
+                      </MagneticButton>
+                    </motion.div>
                   </div>
-                </motion.div>
+                </FloatingCard>
               ))}
             </motion.div>
           </AnimatePresence>
@@ -204,12 +199,10 @@ export default function Products({ darkMode }: ProductsProps) {
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a
-                href="/contact"
-                className="group relative inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-                <span className="relative">Contact Our Engineers</span>
+              <a href="/contact">
+                <MagneticButton variant="primary" size="lg">
+                  Contact Our Engineers
+                </MagneticButton>
               </a>
             </motion.div>
           </div>

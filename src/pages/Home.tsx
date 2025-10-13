@@ -3,6 +3,10 @@ import { ArrowRight, Award, Users, Globe, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '../components/AnimatedSection';
 import LazyImage from '../components/LazyImage';
+import ParallaxHero from '../components/ParallaxHero';
+import FloatingCard from '../components/FloatingCard';
+import MagneticButton from '../components/MagneticButton';
+import MorphingShapes from '../components/MorphingShapes';
 
 interface HomeProps {
   darkMode: boolean;
@@ -11,84 +15,56 @@ interface HomeProps {
 export default function Home({ darkMode }: HomeProps) {
   return (
     <div className="pt-20">
-      <section className="relative h-[600px] bg-cover bg-center bg-no-repeat flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <LazyImage
-            src="https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1600"
-            alt="Advanced water purification technology"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/50 to-black/60" />
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <motion.h1
-            className="text-5xl md:text-6xl font-bold text-white mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Advanced HiPurity Systems
-          </motion.h1>
-          <motion.p
-            className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Leading the way in water purification technology for pharmaceutical, biotech, and research industries
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <Link
-              to="/products"
-              className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 space-x-2 text-lg overflow-hidden shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-              <span className="relative">Explore Our Products</span>
-              <ArrowRight size={24} className="relative transition-transform group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      {/* Replace the old hero with the new parallax hero */}
+      <ParallaxHero darkMode={darkMode} />
 
-      <AnimatedSection className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <AnimatedSection className={`relative py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'} overflow-hidden`}>
+        <MorphingShapes darkMode={darkMode} />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Award, title: 'ISO Certified', description: 'Quality management systems certified to international standards' },
-              { icon: Users, title: 'Expert Team', description: 'Highly skilled professionals with decades of experience' },
-              { icon: Globe, title: 'Global Reach', description: 'Serving clients across multiple continents' },
-              { icon: Shield, title: 'Reliable Solutions', description: 'Proven technology backed by comprehensive support' }
+              { icon: Award, title: 'ISO Certified', description: 'Quality management systems certified to international standards', color: 'blue' },
+              { icon: Users, title: 'Expert Team', description: 'Highly skilled professionals with decades of experience', color: 'purple' },
+              { icon: Globe, title: 'Global Reach', description: 'Serving clients across multiple continents', color: 'green' },
+              { icon: Shield, title: 'Reliable Solutions', description: 'Proven technology backed by comprehensive support', color: 'orange' }
             ].map((item, index) => (
-              <motion.div
+              <FloatingCard
                 key={index}
-                className={`text-center p-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg group ${
-                  darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'
-                }`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true, margin: '-50px' }}
-                whileHover={{ y: -5 }}
+                glowColor={item.color}
+                floatIntensity={0.8}
+                className="h-full"
               >
-                <motion.div
-                  className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full mb-4 shadow-lg"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <item.icon className="text-white" size={32} />
-                </motion.div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {item.title}
-                </h3>
-                <p className={`transition-colors ${darkMode ? 'text-gray-300 group-hover:text-gray-200' : 'text-gray-600 group-hover:text-gray-700'}`}>
-                  {item.description}
-                </p>
-              </motion.div>
+                <div className="text-center p-8">
+                  <motion.div
+                    className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full mb-6 shadow-2xl"
+                    initial={{ scale: 0, rotate: -180 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.1, type: 'spring' }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
+                    <item.icon className="text-white" size={36} />
+                  </motion.div>
+                  <motion.h3
+                    className="text-2xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    {item.title}
+                  </motion.h3>
+                  <motion.p
+                    className={`leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    {item.description}
+                  </motion.p>
+                </div>
+              </FloatingCard>
             ))}
           </div>
         </div>
@@ -150,13 +126,11 @@ export default function Home({ darkMode }: HomeProps) {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <Link
-              to="/industries"
-              className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-              <span className="relative">View All Industries</span>
-              <ArrowRight size={20} className="relative transition-transform group-hover:translate-x-1" />
+            <Link to="/industries">
+              <MagneticButton variant="primary" size="lg">
+                <span>View All Industries</span>
+                <ArrowRight size={20} />
+              </MagneticButton>
             </Link>
           </motion.div>
         </div>
@@ -188,13 +162,11 @@ export default function Home({ darkMode }: HomeProps) {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <Link
-              to="/contact"
-              className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-300 space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-              <span className="relative">Contact Us</span>
-              <ArrowRight size={20} className="relative transition-transform group-hover:translate-x-1" />
+            <Link to="/contact">
+              <MagneticButton variant="primary" size="lg">
+                <span>Contact Us</span>
+                <ArrowRight size={20} />
+              </MagneticButton>
             </Link>
           </motion.div>
         </div>
